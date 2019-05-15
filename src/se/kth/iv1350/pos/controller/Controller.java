@@ -1,40 +1,36 @@
 package se.kth.iv1350.pos.controller;
 import se.kth.iv1350.pos.DTO.ItemDTO;
 import se.kth.iv1350.pos.dbHandler.*;
+import se.kth.iv1350.pos.exceptions.DatabaseFailureException;
+import se.kth.iv1350.pos.exceptions.NonExistingItemException;
 import se.kth.iv1350.pos.model.CashRegister;
 import se.kth.iv1350.pos.model.Sale;
+import se.kth.iv1350.pos.view.TotalRevenue;
+import se.kth.iv1350.pos.view.TotalRevenueView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Controller {
 	RegistryCreator registerCreator;
 	Sale sales;
-	ItemRegistry itemRegistry;
-	AccountingRegistry accountingRegistry;
-	InventoryRegistry inventoryRegistry;
+	private TotalRevenueView totalRevenue = new TotalRevenueView();
+
 		
-		public void startNewSales() {
-			System.out.println(addItem(12, 3));
-			double totalPrice = checksForDiscount(156, sales.paymentInfo());
-			startPayment(200, totalPrice);
-		}
-		
-		public Controller(RegistryCreator newRegisterCreator, Sale newSales, ItemRegistry newItemRegistry, AccountingRegistry newAccountingRegistry, InventoryRegistry newInventoryRegistry) {
+		public Controller(RegistryCreator newRegisterCreator) {
 			registerCreator = newRegisterCreator;
-			sales = newSales;
-			itemRegistry = newItemRegistry;
-			accountingRegistry = newAccountingRegistry;
-			inventoryRegistry = newInventoryRegistry;
 		}
-		
-		public String addItem(int itemIdentifier, int itemQuantity) {
-			ItemDTO newItem = itemRegistry.getItemSpecification(itemIdentifier);
 
-			if(newItem == null){
-				return "Item does not exist.";
-			}
+		public void startNewSales() {
+			sales = new Sale(new ArrayList<>(),"Kista Store", "Kistagatan 20", 2019, 11, 5, 12, 42);
+		}
 
-			sales.addItem(newItem, itemQuantity);
-			
-			return newItem.getName();
+		public String addItem(int itemIdentifier, int itemQuantity) throws NonExistingItemException, DatabaseFailureException {
+			ItemDTO newItem = registerCreator.getItems().getItemSpecification(itemIdentifier);
+
+			registerCreator.getInventoryRegistry().inventoryUpdate(newItem, -itemQuantity);
+			return sales.addItem(newItem, itemQuantity);
 		}
 		
 		public double checksForDiscount(int customerID, double totalPrice) {
@@ -43,8 +39,27 @@ public class Controller {
 		}
 		
 		public double startPayment(double cash, double totalPrice) {
-			CashRegister change = new CashRegister(totalPrice, cash, accountingRegistry, inventoryRegistry);
+			CashRegister change = new CashRegister(totalPrice, cash, registerCreator.getAccountingRegistry(), registerCreator.getInventoryRegistry(), sales);
 			double finalPrice = change.addPayment();
+			notifyObservers();
+			registerCreator.getItems().resetItemRegistry();
 			return finalPrice;
 		}
+
+	public Sale getSales() {
+		return sales;
+	}
+
+	public TotalRevenueView getTotalRevenue() {
+		return totalRevenue;
+	}
+
+	private void notifyObservers() {
+		totalRevenue.newTotal(this.sales.paymentInfo());
+	}
+	/*
+	public void addRevenueObserver(){
+		totalRevenue;
+	}
+	*/
 }

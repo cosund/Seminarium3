@@ -26,4 +26,20 @@ public class RegistryCreator {
 		}
 		return 0;
 	}
+
+	public AccountingRegistry getAccountingRegistry() {
+		return accountingRegistry;
+	}
+
+	public ArrayList<CustomerRegistry> getCustomerRegistries() {
+		return customerRegistries;
+	}
+
+	public InventoryRegistry getInventoryRegistry() {
+		return inventoryRegistry;
+	}
+
+	public ItemRegistry getItems() {
+		return items;
+	}
 }

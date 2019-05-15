@@ -10,11 +10,18 @@ public class InventoryRegistry {
 		items = newItems;
 	}
 	
-	public void inventoryUpdate(ItemDTO itemSpecification){
+	public void inventoryUpdate(ItemDTO itemSpecification, int quantity){
 		for (int i = 0; i < items.size(); i++) {
 			if(items.get(i).getItemIdentifier() == itemSpecification.getItemIdentifier()){
-				items.remove(i);
+				if(items.get(i).getQuantity() > 0){
+					items.get(i).updateQuantity(quantity);
+				}
+				else{
+					items.remove(i);
+				}
+
 			}
+			System.out.println(items.get(i).getQuantity());
 		}
 	}
 

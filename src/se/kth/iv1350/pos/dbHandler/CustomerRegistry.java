@@ -15,11 +15,4 @@ public class CustomerRegistry {
 		}
 		return 0;
 	}
-	public int getCustomerID() {
-		return customerID;
-	}
-
-	public double getSale() {
-		return sale;
-	}
 }

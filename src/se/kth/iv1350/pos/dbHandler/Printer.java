@@ -10,11 +10,7 @@ public class Printer {
 	}
 	
 	public void printReceipt() {
-		if(receipt.getSales().getAllItems().isEmpty()){
-			System.out.println(receipt.getTotalPrice() + " " + receipt.getCash());
-		}
-		else if(receipt.getTotalPrice() == 0 & receipt.getCash() == 0){
-			System.out.println(receipt.getSales().toString());
-		}
+		receipt.createReceipt();
+		System.out.println(receipt.getFinalReceipt());
 	}
 }

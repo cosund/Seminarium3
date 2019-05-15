@@ -13,19 +13,20 @@ public class CashRegister {
 	double cash;
 	AccountingRegistry accountingRegistry;
 	InventoryRegistry inventoryRegistry;
+	Sale sales;
 
-	public CashRegister(double newTotalPrice, double newCash, AccountingRegistry newAccountingRegistry, InventoryRegistry newInventoryRegistry){
+	public CashRegister(double newTotalPrice, double newCash, AccountingRegistry newAccountingRegistry, InventoryRegistry newInventoryRegistry, Sale newSale){
 		totalPrice = newTotalPrice;
 		cash = newCash;
 		accountingRegistry = newAccountingRegistry;
 		inventoryRegistry = newInventoryRegistry;
+		sales = newSale;
+
 	}
 
 	public double addPayment() {
 		double change = this.cash - this.totalPrice;
-		ArrayList<ItemDTO> item = new ArrayList<ItemDTO>();
-		Sale sale = new Sale(item, "", "", 0, 0 , 0, 0, inventoryRegistry);
-		Receipt receipt = new Receipt(this.totalPrice, change, sale);
+		Receipt receipt = new Receipt(this.totalPrice, change, sales);
 		Printer print = new Printer(receipt);
 		print.printReceipt();
 
