@@ -10,6 +10,7 @@ public class View {
 	public View(Controller newContr) {
 
 		this.contr = newContr;
+		contr.addRevenueObserver(new TotalRevenueView());
 		
 	}
 
@@ -28,8 +29,6 @@ public class View {
 			}
 			double totalPrice = contr.checksForDiscount(156, contr.getSales().paymentInfo());
 			contr.startPayment(200, totalPrice);
-			contr.getTotalRevenue().printCurrentSale();
-
 
 			contr.startNewSales();
 			try {
@@ -47,7 +46,6 @@ public class View {
 			}
 			double totalPrice2 = contr.checksForDiscount(156, contr.getSales().paymentInfo());
 			contr.startPayment(100, totalPrice2);
-			contr.getTotalRevenue().printCurrentSale();
 		}
 
 	}

@@ -1,14 +1,14 @@
 package se.kth.iv1350.pos.model;
 
-import se.kth.iv1350.pos.DTO.ItemDTO;
 import se.kth.iv1350.pos.DTO.Receipt;
 import se.kth.iv1350.pos.dbHandler.AccountingRegistry;
 import se.kth.iv1350.pos.dbHandler.InventoryRegistry;
 import se.kth.iv1350.pos.dbHandler.Printer;
-
-import java.util.ArrayList;
+import se.kth.iv1350.pos.view.TotalRevenueView;
 
 public class CashRegister {
+	TotalRevenue totalRevenueObserver;
+
 	double totalPrice;
 	double cash;
 	AccountingRegistry accountingRegistry;
@@ -29,10 +29,17 @@ public class CashRegister {
 		Receipt receipt = new Receipt(this.totalPrice, change, sales);
 		Printer print = new Printer(receipt);
 		print.printReceipt();
+		notifyObservers();
 
 		accountingRegistry.accountingUpdate(totalPrice);
 		return change;
 	}
-	
+	public void addObservers(TotalRevenueView totalRevenueView){
+		this.totalRevenueObserver = totalRevenueView;
+	}
+	private void notifyObservers() {
+		totalRevenueObserver.newTotal(this.totalPrice);
+	}
+
 	
 }

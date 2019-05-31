@@ -18,7 +18,7 @@ public class RegistryCreator {
 
 	public double getCustomerDiscount(int customerID) {
 
-		for(int i = 0; i > (customerRegistries.size() - 1); i++){
+		for(int i = 0; i < customerRegistries.size(); i++){
 			double discount = customerRegistries.get(i).findCustomer(customerID);
 			if(discount != 0) {
 				return discount;

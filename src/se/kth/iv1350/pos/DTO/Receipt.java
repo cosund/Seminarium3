@@ -34,4 +34,8 @@ public class Receipt {
 	public String getFinalReceipt() {
 		return finalReceipt;
 	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
 }

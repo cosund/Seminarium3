@@ -1,9 +1,6 @@
 package se.kth.iv1350.pos.model;
 
 import	se.kth.iv1350.pos.DTO.ItemDTO;
-import se.kth.iv1350.pos.DTO.Receipt;
-import se.kth.iv1350.pos.dbHandler.InventoryRegistry;
-import se.kth.iv1350.pos.dbHandler.Printer;
 
 import java.util.ArrayList;
 
@@ -38,7 +35,7 @@ public class Sale {
 		for (int i = 0; i < allItems.size(); i++) {
 			if(allItems.get(i) == newItem){
 				allItems.get(i).updateQuantity(quantity);
-				//inventoryRegistry.inventoryUpdate(newItem, quantity);
+
 
 				return newItem.getName() + " x" + allItems.get(i).getQuantity();
 			}

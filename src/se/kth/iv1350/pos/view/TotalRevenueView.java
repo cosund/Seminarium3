@@ -1,5 +1,7 @@
 package se.kth.iv1350.pos.view;
 
+import se.kth.iv1350.pos.model.TotalRevenue;
+
 public class TotalRevenueView implements TotalRevenue {
 
     private double revenue;
@@ -10,9 +12,10 @@ public class TotalRevenueView implements TotalRevenue {
 
     public void newTotal(double paymentInfo){
         this.revenue += paymentInfo;
+        printCurrentSale();
     }
 
-    public void printCurrentSale(){
+    private void printCurrentSale(){
         System.out.println("---Current total revenue---");
         System.out.println(revenue);
     }

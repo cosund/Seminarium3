@@ -21,7 +21,7 @@ public class InventoryRegistry {
 				}
 
 			}
-			System.out.println(items.get(i).getQuantity());
+			//System.out.println(items.get(i).getQuantity());
 		}
 	}
 
