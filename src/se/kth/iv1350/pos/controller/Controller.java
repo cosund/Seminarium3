@@ -48,8 +48,8 @@ public class Controller {
 		totalRevenueObserver = totalRevenueView;
 
 	}
-	public Sale getSales() {
-		return sales;
+	public double getPaymentInfo(){
+			return this.sales.paymentInfo();
 	}
 
 }

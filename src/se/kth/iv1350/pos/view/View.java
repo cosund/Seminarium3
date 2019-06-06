@@ -1,7 +1,6 @@
 package se.kth.iv1350.pos.view;
 import se.kth.iv1350.pos.controller.*;
-import se.kth.iv1350.pos.exceptions.DatabaseFailureException;
-import se.kth.iv1350.pos.exceptions.NonExistingItemException;
+
 
 public class View {
 
@@ -27,7 +26,7 @@ public class View {
 			} catch (Exception e2) {
 				System.out.println(e2);
 			}
-			double totalPrice = contr.checksForDiscount(156, contr.getSales().paymentInfo());
+			double totalPrice = contr.checksForDiscount(156, contr.getPaymentInfo());
 			contr.startPayment(200, totalPrice);
 
 			contr.startNewSales();
@@ -44,7 +43,7 @@ public class View {
 				System.out.println(e4);
 
 			}
-			double totalPrice2 = contr.checksForDiscount(156, contr.getSales().paymentInfo());
+			double totalPrice2 = contr.checksForDiscount(156, contr.getPaymentInfo());
 			contr.startPayment(100, totalPrice2);
 		}
 
